@@ -38,6 +38,9 @@ return [
         ],
     ],
 
+    // 管理员管理控制器
+    'auth_controller' => App\Admin\Controllers\AdminUserController::class,
+
     // 认证guard, 请在config/auth.php中配置
     'guard' => 'admin',
 ];

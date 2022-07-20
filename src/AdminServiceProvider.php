@@ -6,7 +6,6 @@
 
 namespace Wyz\ElementCurd;
 
-use App\Admin\Controllers\AdminUserController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -34,7 +33,7 @@ class AdminServiceProvider extends ServiceProvider
             $router->get('getAsyncRoutes', [AdminAuthController::class, 'getAsyncRoutes']);
             $router->resource('/auth/permissions', PermissionController::class);
             $router->resource('/auth/roles', RoleController::class);
-            $router->resource('/auth/users', AdminUserController::class);
+            $router->resource('/auth/users', config('admin.auth_controller'));
             $router->resource('/auth/menus', MenuController::class);
         });
     }

@@ -119,42 +119,52 @@ php artisan db:seed --class=Wyz\ElementCurd\Seeder\RolesAndPermissionsSeeder
 ### 增删改查示例
 ```php
 <?php
-namespace App\Http\Controllers\Admin;
 
+namespace App\Admin\Controllers;
+
+use App\Enums\AdminStatus;
+use App\Models\Admin;
 use Wyz\ElementCurd\Form\Form;
 use Wyz\ElementCurd\Grid\Filter;
 use Wyz\ElementCurd\Grid\Grid;
-use Wyz\ElementCurd\Model\Permission;
+use Wyz\ElementCurd\Http\Controllers\AdminController;
 use Wyz\ElementCurd\Model\Role;
 
-class RoleController extends AdminController
+class AdminUserController extends AdminController
 {
     /**
      * 表格.
      */
     protected function grid(): Grid
     {
-        return Grid::make(Role::with(['permissions']), function (Grid $grid) {
-            $grid->tableTitle('角色管理');
+        return Grid::make(Admin::with(['roles']), function (Grid $grid) {
+            $grid->tableTitle('管理员');
             $grid->column('id', '编号')->width('60px');
-            $grid->column('name', '角色标识');
-            $grid->column('title', '角色名');
-            $grid->column('permissions.*.title', '权限')->multipleLabel();
+            $grid->column('name', '名称');
+            $grid->column('username', '用户名');
+            $grid->column('avatar', '头像')->image();
+            $grid->column('status', '状态')->label(AdminStatus::label());
+            $grid->column('roles.*.title', '角色')->multipleLabel();
             $grid->column('created_at', '创建时间');
 
             $grid->filter(function (Filter $filter) {
-                $filter->text('name', '角色名', 'like');
+                $filter->text('name', '名称', 'like');
+                $filter->text('username', '用户名', 'like');
+                $filter->select('status', '状态', '=')->options(AdminStatus::options());
+                $filter->multipleSelect('role_id', '角色', ['in', 'roles.id'])->options(
+                    Role::query()->pluck('name', 'id')
+                );
             });
 
             $grid->disableShowBtn();
 
             // 设置编辑参数
             $grid->openEditDialog();
-            $grid->editSize('600px');
+            $grid->editSize('500px');
 
             // 设置新增参数
             $grid->openCreateDialog();
-            $grid->createSize('600px');
+            $grid->createSize('500px');
         });
     }
 
@@ -163,37 +173,95 @@ class RoleController extends AdminController
      */
     public function form(): Form
     {
-        return Form::make(Role::with('permissions'), function (Form $form) {
-            $form->text('name', '角色标识')->rules(['required']);
-            $form->text('title', '角色名')->rules(['required']);
-            $form->treeMultipleSelect('permissions.*.id', '权限')
-                ->options(Permission::options())
+        return Form::make(Admin::with(['roles']), function (Form $form) {
+            $form->text('name', '姓名')->rules(['required']);
+            $form->text('username', '用户名')->rules(['required']);
+            if ($form->isCreate()) {
+                $form->password('password', '密码')->rules(['required']);
+            }
+            if ($form->isEdit()) {
+                $form->password('password', '密码');
+            }
+            $form->switch('status', '状态')->options([
+                'on' => AdminStatus::Normal,
+                'off' => AdminStatus::Disabled,
+            ])->rules(['required']);
+            $form->multipleSelect('roles.*.id', '角色')
+                ->options(Role::query()->pluck('title', 'id'))
                 ->rules(['required']);
+
+            // 保存前回调
             $form->saving(function (Form $form, $data) {
-                $data['pid'] = 0;
+                $data['status'] = $data['status'] ? AdminStatus::Normal : AdminStatus::Disabled;
+                if ($form->isEdit()) {
+                    if ($data['password']) {
+                        $data['password'] = bcrypt($data['password']);
+                    } else {
+                        unset($data['password']); // 删除password字段
+                    }
+                }
+                if ($form->isCreate()) {
+                    $data['password'] = bcrypt($data['password']);
+                }
 
                 return $data;
             });
+
+            // 保存后回调
             $form->saved(function (Form $form, $model, $withToData) {
-                $model->permissions()->sync($withToData['permissions.*.id']);
+                // 更新角色
+                $model->syncRoles(Role::query()->find($withToData['roles.*.id']));
             });
-        });
-    }
-    
-    /**
-    * 详情.
-    */
-    public function detail($id): Show
-    {
-        return Show::make(Role::query()->find($id), function (Show $show) {
-            $show->field('id', '编号');
-            $show->field('name', '标识');
-            $show->field('title', '标题');
         });
     }
 }
 ```
+`AdminStatus.php`
+```php
+<?php
 
+namespace App\Enums;
+
+enum AdminStatus: int
+{
+    case Normal = 1;
+    case Disabled = 0; // 禁用
+    /**
+     * label.
+     */
+    public static function label(): array
+    {
+        return [
+            AdminStatus::Disabled->value => ['color' => 'danger', 'text' => '禁用'],
+            AdminStatus::Normal->value => ['color' => 'success', 'text' => '正常'],
+        ];
+    }
+
+    /**
+     * select options.
+     */
+    public static function options(): array
+    {
+        return [
+            AdminStatus::Disabled->value => '禁用',
+            AdminStatus::Normal->value => '正常',
+        ];
+    }
+}
+```
+
+### 路由配置
+```php
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
+
+Route::group([
+    'prefix' => config('admin.route.prefix'),
+    'middleware' => config('admin.route.middleware');,
+], function (Router $router) {
+    $router->resource('/demo', DemoController::class);
+});
+```
 
 暂时没时间写文档，一些其他的用法自己摸索....
 
