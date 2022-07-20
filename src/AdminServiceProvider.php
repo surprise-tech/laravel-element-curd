@@ -13,6 +13,7 @@ use Wyz\ElementCurd\Http\Controllers\AdminAuthController;
 use Wyz\ElementCurd\Http\Controllers\MenuController;
 use Wyz\ElementCurd\Http\Controllers\PermissionController;
 use Wyz\ElementCurd\Http\Controllers\RoleController;
+use Wyz\ElementCurd\Http\Controllers\UploadController;
 use Wyz\ElementCurd\Http\Middleware\Authenticate;
 
 class AdminServiceProvider extends ServiceProvider
@@ -30,6 +31,7 @@ class AdminServiceProvider extends ServiceProvider
         ], function (Router $router) {
             $router->post('login', [AdminAuthController::class, 'login']);
             $router->get('logout', [AdminAuthController::class, 'logout']);
+            $router->post('upload', [UploadController::class, 'upload']);
             $router->get('getAsyncRoutes', [AdminAuthController::class, 'getAsyncRoutes']);
             $router->resource('/auth/permissions', PermissionController::class);
             $router->resource('/auth/roles', RoleController::class);

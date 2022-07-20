@@ -9,15 +9,13 @@ namespace Wyz\ElementCurd\Form;
 
 use Wyz\ElementCurd\Help;
 
-class Image extends FormItem
+class Image extends File
 {
     protected string $type = 'cu-upload';
-
-    protected array $binds = [];
 
     public function __construct(string $column, string $label = '')
     {
         parent::__construct($column, $label);
-        $this->binds['action'] = Help::adminBasePath('/upload');
+        $this->binds['options']['accept'] = 'image/*';
     }
 }

@@ -15,10 +15,12 @@ class Select extends FormItem
     protected string $placeholderFormat = '请选择%label';
 
     protected array $binds = [
-        'clearable' => true,
-        'style' => [
-            'width' => '100%',
-        ],
+        'options' => [
+            'clearable' => true,
+            'style' => [
+                'width' => '100%',
+            ],
+        ]
     ];
 
     /**
@@ -38,7 +40,7 @@ class Select extends FormItem
             $opts[] = $temp;
         }
 
-        $this->binds = array_merge($this->binds, [
+        $this->binds['options'] = array_merge($this->binds['options'], [
             'options' => $opts,
         ]);
 

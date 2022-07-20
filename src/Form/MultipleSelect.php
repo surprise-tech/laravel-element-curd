@@ -9,10 +9,12 @@ namespace Wyz\ElementCurd\Form;
 class MultipleSelect extends Select
 {
     protected array $binds = [
-        'multiple' => true,
-        'clearable' => true,
-        'style' => [
-            'width' => '100%',
-        ],
+        'options' => [
+            'multiple' => true,
+            'clearable' => true,
+            'style' => [
+                'width' => '100%',
+            ],
+        ]
     ];
 }
