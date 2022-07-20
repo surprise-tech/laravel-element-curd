@@ -17,6 +17,7 @@ use Wyz\ElementCurd\Enums\FormMode;
  * Class Form.
  *
  * @method Text               text($column, $label = '')
+ * @method Image              image($column, $label = '')
  * @method Textarea           textarea($column, $label = '')
  * @method Password           password($column, $label = '')
  * @method DatePicker         datePicker($column, $label = '')
@@ -76,6 +77,7 @@ class Form extends ElementAttributes implements Renderable
         'multipleSelect' => MultipleSelect::class,
         'treeMultipleSelect' => TreeMultipleSelect::class,
         'switch' => SwitchField::class,
+        'image' => Image::class,
     ];
 
     /**
