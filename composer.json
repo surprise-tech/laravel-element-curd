@@ -1,0 +1,29 @@
+{
+    "name": "wyzheng/element-curd",
+    "version": "dev-master",
+    "license": "MIT",
+    "description": "laravel和element-pro的结合，通过php生成element-pro配置项，可以快速开发CURD",
+    "keywords": ["library", "laravel", "element", "wyzheng", "curd"],
+    "autoload": {
+        "psr-4": {
+            "Wyz\\ElementCurd\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wyzheng1997",
+            "email": "wyzheng1997@163.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^9.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wyz\\ElementCurd\\AdminServiceProvider"
+            ]
+        }
+    }
+}
