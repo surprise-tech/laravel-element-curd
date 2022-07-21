@@ -6,9 +6,6 @@
 
 namespace Wyz\ElementCurd\Form;
 
-
-use Wyz\ElementCurd\Help;
-
 class Image extends File
 {
     protected string $type = 'cu-upload';
@@ -17,5 +14,14 @@ class Image extends File
     {
         parent::__construct($column, $label);
         $this->binds['options']['accept'] = 'image/*';
+    }
+
+    public function multiple(bool $flag = true): static
+    {
+        unset($this->binds['options']['list-type']);
+        $this->binds['options']['multiple'] = $flag;
+        $this->binds['options']['show-file-list'] = false;
+
+        return $this;
     }
 }

@@ -20,7 +20,8 @@ class Select extends FormItem
             'style' => [
                 'width' => '100%',
             ],
-        ]
+        ],
+        'select-options' => [],
     ];
 
     /**
@@ -40,9 +41,7 @@ class Select extends FormItem
             $opts[] = $temp;
         }
 
-        $this->binds['options'] = array_merge($this->binds['options'], [
-            'options' => $opts,
-        ]);
+        $this->binds['select-options'] = $opts;
 
         return $this;
     }

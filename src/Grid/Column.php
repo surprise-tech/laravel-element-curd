@@ -106,6 +106,7 @@ class Column implements Renderable
             'style' => [
                 'width' => $width,
                 'height' => $height,
+                'margin' => '2px',
             ],
         ];
 

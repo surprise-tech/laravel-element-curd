@@ -34,7 +34,7 @@ return [
         'account' => [
             'name' => '超级管理员',
             'username' => 'admin',
-            'password' =>'admin',
+            'password' => 'admin',
         ],
     ],
 
@@ -43,4 +43,10 @@ return [
 
     // 认证guard, 请在config/auth.php中配置
     'guard' => 'admin',
+
+    // 文件上传
+    'upload' => [
+        'disk' => 'public',
+        'dir' => 'file',
+    ],
 ];

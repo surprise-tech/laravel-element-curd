@@ -15,6 +15,6 @@ class MultipleSelect extends Select
             'style' => [
                 'width' => '100%',
             ],
-        ]
+        ],
     ];
 }

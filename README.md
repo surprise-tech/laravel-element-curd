@@ -257,7 +257,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => config('admin.route.prefix'),
-    'middleware' => config('admin.route.middleware');,
+    'middleware' => config('admin.route.middleware')
 ], function (Router $router) {
     $router->resource('/demo', DemoController::class);
 });

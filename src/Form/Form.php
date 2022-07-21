@@ -18,6 +18,7 @@ use Wyz\ElementCurd\Enums\FormMode;
  *
  * @method Text               text($column, $label = '')
  * @method Image              image($column, $label = '')
+ * @method File               file($column, $label = '')
  * @method Textarea           textarea($column, $label = '')
  * @method Password           password($column, $label = '')
  * @method DatePicker         datePicker($column, $label = '')
@@ -78,6 +79,7 @@ class Form extends ElementAttributes implements Renderable
         'treeMultipleSelect' => TreeMultipleSelect::class,
         'switch' => SwitchField::class,
         'image' => Image::class,
+        'file' => File::class,
     ];
 
     /**
