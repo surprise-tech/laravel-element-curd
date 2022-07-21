@@ -347,7 +347,7 @@ class Grid extends ElementAttributes implements Renderable
             }
 
             // 强制加入主键
-            if (!isset($item[$this->keyName])) {
+            if (!isset($temp[$this->keyName])) {
                 $temp[$this->keyName] = data_get($item, $this->keyName);
             }
             $data[] = $temp;
