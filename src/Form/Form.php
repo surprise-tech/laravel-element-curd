@@ -266,6 +266,7 @@ class Form extends ElementAttributes implements Renderable
     public function delete()
     {
         $model = $this->model->where('id', $this->_id)->first();
+        $this->builderCallback && call_user_func($this->builderCallback, $this, $model);
         // 删除前
         if (isset($this->formEvent['deleting']) && $this->formEvent['deleting'] instanceof \Closure) {
             call_user_func($this->formEvent['deleting'], $this, $model);
