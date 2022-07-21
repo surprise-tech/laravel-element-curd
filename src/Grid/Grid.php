@@ -73,6 +73,11 @@ class Grid extends ElementAttributes implements Renderable
     protected mixed $model;
 
     /**
+     * 主键.
+     */
+    protected string $keyName = 'id';
+
+    /**
      * 初始化回调函数.
      */
     protected \Closure|null $builderCallback = null;
@@ -90,10 +95,11 @@ class Grid extends ElementAttributes implements Renderable
      *
      * @param null $model
      */
-    public function __construct($model = null, ?\Closure $builderCallback = null)
+    public function __construct($model = null, ?\Closure $builderCallback = null, string $keyName = 'id')
     {
         $this->filter = new Filter();
         $this->model = is_string($model) ? app($model) : $model;
+        $this->keyName = $keyName; // 主键
         $this->builderCallback = $builderCallback;
     }
 
@@ -323,7 +329,7 @@ class Grid extends ElementAttributes implements Renderable
         }
 
         if ($this->tableOptions['treeTableOptions']['enable']) {
-            // 开启分页的情况下要加入pidField和keyField字段
+            // 开启树形表格的情况下要加入pidField和keyField字段
             if (!isset($this->column[$this->tableOptions['treeTableOptions']['pidField']])) {
                 $this->column[$this->tableOptions['treeTableOptions']['pidField']] = new Column($this->tableOptions['treeTableOptions']['pidField']);
             }
@@ -338,6 +344,11 @@ class Grid extends ElementAttributes implements Renderable
             $temp = [];
             foreach ($this->column as $field => $column) {
                 $temp[$field] = call_user_func($column->getDisplayCallback(), data_get($item, $field), $item);
+            }
+
+            // 强制加入主键
+            if (!isset($item[$this->keyName])) {
+                $temp[$this->keyName] = data_get($item, $this->keyName);
             }
             $data[] = $temp;
         }
