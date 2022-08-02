@@ -9,6 +9,7 @@ namespace Wyz\ElementCurd\Grid;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\Macroable;
+use Wyz\ElementCurd\Form\Cascader;
 use Wyz\ElementCurd\Form\DatePicker;
 use Wyz\ElementCurd\Form\Form;
 use Wyz\ElementCurd\Form\MultipleSelect;
@@ -32,6 +33,7 @@ use Wyz\ElementCurd\Form\TreeSelect;
  * @method TreeSelect         treeSelect($column, $label = '', $searchRule = '')
  * @method TreeMultipleSelect treeMultipleSelect($column, $label = '', $searchRule = '')
  * @method SwitchField        switch ($column, $label = '', $searchRule = '')
+ * @method Cascader           cascader ($column, $label = '', $searchRule = '')
  */
 class Filter implements Renderable
 {
