@@ -27,6 +27,7 @@ use Wyz\ElementCurd\Enums\FormMode;
  * @method TreeSelect         treeSelect($column, $label = '')
  * @method TreeMultipleSelect treeMultipleSelect($column, $label = '')
  * @method SwitchField        switch ($column, $label = '')
+ * @method Cascader           cascader ($column, $label = '')
  * @method Custom             custom ($column, $label = '')
  */
 class Form extends ElementAttributes implements Renderable
@@ -81,6 +82,7 @@ class Form extends ElementAttributes implements Renderable
         'switch' => SwitchField::class,
         'image' => Image::class,
         'file' => File::class,
+        'cascader' => Cascader::class,
         'custom' => Custom::class,
     ];
 
