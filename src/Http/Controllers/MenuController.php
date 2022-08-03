@@ -26,7 +26,7 @@ class MenuController extends AdminController
             $grid->column('icon', '图标')->icon();
             $grid->column('frame_src', '内嵌页面');
 
-            $grid->enableTree();
+            $grid->enableTree()->disablePagination();
             $grid->createSize('500px');
             $grid->editSize('500px');
 
