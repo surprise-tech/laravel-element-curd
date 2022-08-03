@@ -19,4 +19,14 @@ class Custom extends FormItem
 
         return $this;
     }
+
+    /**
+     * 自定义参数.
+     */
+    public function options(array $options): static
+    {
+        $this->binds['options'] = $options;
+
+        return $this;
+    }
 }
