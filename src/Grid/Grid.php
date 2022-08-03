@@ -21,6 +21,7 @@ class Grid extends ElementAttributes implements Renderable
         'showEditBtn' => true, // 显示编辑按钮
         'showDeleteBtn' => true, // 显示删除按钮
         'showActions' => true, // 显示操作列.
+        'actionWidth' => '150px',
         'showPagination' => true, // 显示分页
         'treeTableOptions' => [
             'enable' => false,
@@ -309,6 +310,16 @@ class Grid extends ElementAttributes implements Renderable
     }
 
     /**
+     * 设置actions的宽度.
+     */
+    public function actionWidth(string $width = '150px')
+    {
+        $this->tableOptions['actionWidth'] = $width;
+
+        return $this;
+    }
+
+    /**
      * 渲染数据.
      */
     public function resource(): array
@@ -446,7 +457,7 @@ class Grid extends ElementAttributes implements Renderable
                 'bind' => [
                     'label' => '操作',
                     'prop' => '__actions__',
-                    'width' => '150',
+                    'width' => $this->tableOptions['actionWidth'],
                     'fixed' => 'right',
                 ],
                 'custom' => true,
