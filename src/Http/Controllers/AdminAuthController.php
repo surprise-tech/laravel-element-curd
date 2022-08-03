@@ -75,7 +75,10 @@ class AdminAuthController extends Controller
             if ($name = data_get($item, 'name')) {
                 $temp['name'] = $name;
             }
-            foreach (['redirect', 'icon', 'frame_src'] as $key) {
+            if ($redirect = data_get($item, 'redirect')) {
+                $temp['redirect'] = $redirect;
+            }
+            foreach (['icon', 'frame_src'] as $key) {
                 if ($val = data_get($item, $key)) {
                     $temp['meta'][$key] = $val;
                 }
