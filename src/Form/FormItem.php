@@ -60,10 +60,16 @@ class FormItem extends ElementAttributes implements Renderable
     protected string $placeholderFormat = '%label';
 
     /**
+     * 字段保存前回调.
+     */
+    protected \Closure $savingCallback;
+
+    /**
      * 初始化.
      */
     public function __construct(string $column, string $label = '')
     {
+        $this->savingCallback = fn ($v) => $v;
         $this->column = $column;
         $this->label = $label;
     }
@@ -128,6 +134,24 @@ class FormItem extends ElementAttributes implements Renderable
     public function getDefault(): mixed
     {
         return $this->defaultVal;
+    }
+
+    /**
+     * 转换处理请求值.
+     */
+    public function saving(\Closure $callback): static
+    {
+        $this->savingCallback = $callback;
+
+        return $this;
+    }
+
+    /**
+     * 获取保存前回调函数.
+     */
+    public function getSavingCallback(): \Closure
+    {
+        return $this->savingCallback;
     }
 
     /**

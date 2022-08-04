@@ -29,6 +29,8 @@ class SwitchField extends FormItem
             $this->switchOptions['on'] = $switchOptions['on'];
         }
 
+        $this->saving(fn ($v) => $v ? $this->switchOptions['on'] : $this->switchOptions['off']);
+
         return $this;
     }
 

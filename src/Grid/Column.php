@@ -152,6 +152,20 @@ class Column implements Renderable
     }
 
     /**
+     * 开关.
+     */
+    public function switch(bool $event = false): static
+    {
+        $this->custom = [
+            'type' => 'column-edit',
+            'element-tag' => 'input',
+            'event' => $event ? 1 : 0,
+        ];
+
+        return $this;
+    }
+
+    /**
      * 渲染.
      */
     public function render(): array

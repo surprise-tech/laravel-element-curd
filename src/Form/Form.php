@@ -195,11 +195,11 @@ class Form extends ElementAttributes implements Renderable
         $data = [];
         // 关联数据
         $withToData = [];
-        foreach (array_keys($this->formItems) as $key) {
+        foreach ($this->formItems as $key => $formItem) {
             if (Str::contains($key, '.')) {
-                $withToData[$key] = $ipt->input(str_replace('.', '_', $key));
+                $withToData[$key] = call_user_func($formItem->getSavingCallback(), $ipt->input(str_replace('.', '_', $key)));
             } else {
-                $data[$key] = $ipt->input($key);
+                $data[$key] = call_user_func($formItem->getSavingCallback(), $ipt->input($key));
             }
         }
         // 行内编辑是否触发事件
