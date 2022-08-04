@@ -185,7 +185,11 @@ class Form extends ElementAttributes implements Renderable
         $this->builderCallback && call_user_func($this->builderCallback, $this, $model);
         $ipt = request();
         [$rules, $message] = $this->getRules();
-        $ipt->validate($rules, $message);
+        $is_inline_edit = $ipt->has('_inline_edit_');
+        if (!$is_inline_edit) { //  行内编辑，不验证
+            $ipt->validate($rules, $message);
+        }
+
         // 当前model数据
         $data = [];
         // 关联数据
@@ -197,11 +201,17 @@ class Form extends ElementAttributes implements Renderable
                 $data[$key] = $ipt->input($key);
             }
         }
-        if (isset($this->formEvent['saving']) && $this->formEvent['saving'] instanceof \Closure) {
+        // 行内编辑是否触发事件
+        $event = $model && $is_inline_edit && $ipt->input('_event_');
+        if ($event && isset($this->formEvent['saving']) && $this->formEvent['saving'] instanceof \Closure) {
             $data = call_user_func($this->formEvent['saving'], $this, $data, $ipt);
         }
 
         if ($this->_id && $model) { // 更新
+            if ($is_inline_edit) {
+                // 行内元素，取交集
+                $data = array_intersect($data, $ipt->all());
+            }
             foreach ($data as $key => $val) {
                 $model->$key = $val;
             }
@@ -212,7 +222,7 @@ class Form extends ElementAttributes implements Renderable
         }
 
         // 保存后回调
-        if (isset($this->formEvent['saved']) && $this->formEvent['saved'] instanceof \Closure) {
+        if ($event && isset($this->formEvent['saved']) && $this->formEvent['saved'] instanceof \Closure) {
             call_user_func($this->formEvent['saved'], $this, $model, $withToData);
         }
 
