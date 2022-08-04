@@ -154,13 +154,16 @@ class Column implements Renderable
     /**
      * 开关.
      */
-    public function switch(bool $event = false): static
+    public function switch(string|null $active = null, string|null $inactive = null, bool $event = false): static
     {
         $this->custom = [
             'type' => 'column-edit',
             'element-tag' => 'input',
             'event' => $event ? 1 : 0,
+            'bind' => [],
         ];
+        $active && $this->custom['bind']['active-text'] = $active;
+        $inactive && $this->custom['bind']['inactive-text'] = $inactive;
 
         return $this;
     }

@@ -20,7 +20,7 @@ class SwitchField extends FormItem
     /**
      * 设置开关的值.
      */
-    public function options(array $switchOptions = []): static
+    public function options(array $switchOptions = [], string|null $active = null, string|null $inactive = null): static
     {
         if (isset($switchOptions['off'])) {
             $this->switchOptions['off'] = $switchOptions['off'];
@@ -28,6 +28,10 @@ class SwitchField extends FormItem
         if (isset($switchOptions['on'])) {
             $this->switchOptions['on'] = $switchOptions['on'];
         }
+
+        $active && $this->binds['active-text'] = $active;
+
+        $inactive && $this->binds['inactive-text'] = $inactive;
 
         $this->saving(fn ($v) => $v ? $this->switchOptions['on'] : $this->switchOptions['off']);
 

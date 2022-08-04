@@ -203,7 +203,7 @@ class Form extends ElementAttributes implements Renderable
             }
         }
         // 行内编辑是否触发事件
-        $event = $model && $is_inline_edit && $ipt->input('_event_');
+        $event = !$is_inline_edit || $ipt->input('_event_');
         if ($event && isset($this->formEvent['saving']) && $this->formEvent['saving'] instanceof \Closure) {
             $data = call_user_func($this->formEvent['saving'], $this, $data, $ipt);
         }
