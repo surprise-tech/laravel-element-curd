@@ -69,7 +69,6 @@ class AdminAuthController extends Controller
                     'title' => data_get($item, 'title'),
                     'showLink' => MenuShowLink::OPEN === data_get($item, 'show_link'),
                     'keepAlive' => MenuKeepAlive::OPEN === data_get($item, 'keep_alive'),
-                    'rank' => data_get($item, 'rank'),
                 ],
             ];
             if ($name = data_get($item, 'name')) {
