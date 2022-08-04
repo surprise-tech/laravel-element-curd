@@ -58,7 +58,7 @@ class AdminAuthController extends Controller
     public function getAsyncRoutes(): JsonResponse
     {
         $admin = app(config('admin.table.model'))->with('roles')->findOrFail(auth(config('admin.guard'))->id());
-        $menus = Menu::query()->whereHas('roles', function ($roles) use ($admin) {
+        $menus = Menu::query()->orderBy('rank')->whereHas('roles', function ($roles) use ($admin) {
             $roles->whereIn('id', (array) data_get($admin, 'roles.*.id'));
         })->get();
 
