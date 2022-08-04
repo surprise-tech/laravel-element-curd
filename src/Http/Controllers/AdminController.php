@@ -14,6 +14,7 @@ use Wyz\ElementCurd\Enums\FormMode;
 use Wyz\ElementCurd\Exceptions\CurdCustomError;
 use Wyz\ElementCurd\Form\Form;
 use Wyz\ElementCurd\Grid\Grid;
+use Wyz\ElementCurd\Show\MultipleShow;
 use Wyz\ElementCurd\Show\Show;
 use Wyz\ElementCurd\Traits\ApiResponse;
 
@@ -123,7 +124,7 @@ class AdminController extends Controller
     }
 
     // 详情逻辑，子类重写
-    protected function detail($id): Show|null
+    protected function detail($id): Show|MultipleShow|null
     {
         return null;
     }
