@@ -20,6 +20,7 @@ class MenuController extends AdminController
         return Grid::make(Menu::query()->orderBy('rank'), function (Grid $grid) {
             $grid->column('id', '编号')->width('100px');
             $grid->column('title', '标题');
+            $grid->column('rank', '排序')->width('100px')->textInput();
             $grid->column('path', '路由路径');
             $grid->column('name', '组件名');
             $grid->column('redirect', '重定向');
@@ -63,6 +64,8 @@ class MenuController extends AdminController
                 'off' => MenuKeepAlive::CLOSE,
                 'on' => MenuKeepAlive::OPEN,
             ]);
+
+            $form->text('rank', '排序')->default(0)->rules(['required']);
 
             $form->saved(function (Form $form, $model, $withToData) {
                 $model->roles()->sync($withToData['roles.*.id']);

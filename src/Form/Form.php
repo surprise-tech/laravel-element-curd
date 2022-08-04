@@ -186,9 +186,10 @@ class Form extends ElementAttributes implements Renderable
         $ipt = request();
         [$rules, $message] = $this->getRules();
         $is_inline_edit = $ipt->has('_inline_edit_');
-        if (!$is_inline_edit) { //  行内编辑，不验证
-            $ipt->validate($rules, $message);
+        if ($is_inline_edit) { //  行内编辑，只验证固定字段
+            $rules = array_intersect_key($rules, $ipt->all());
         }
+        $ipt->validate($rules, $message);
 
         // 当前model数据
         $data = [];
@@ -210,7 +211,7 @@ class Form extends ElementAttributes implements Renderable
         if ($this->_id && $model) { // 更新
             if ($is_inline_edit) {
                 // 行内元素，取交集
-                $data = array_intersect($data, $ipt->all());
+                $data = array_intersect_key($ipt->all(), $data);
             }
             foreach ($data as $key => $val) {
                 $model->$key = $val;
