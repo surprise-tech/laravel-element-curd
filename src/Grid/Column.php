@@ -138,6 +138,19 @@ class Column implements Renderable
     }
 
     /**
+     * 文本编辑框.
+     */
+    public function textInput(bool $event = false): static
+    {
+        $this->custom = [
+            'type' => 'column-edit',
+            'element-tag' => 'input',
+            'event' => $event ? 1 : 0
+        ];
+        return $this;
+    }
+
+    /**
      * 渲染.
      */
     public function render(): array

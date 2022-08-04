@@ -17,7 +17,7 @@ class MenuController extends AdminController
 {
     protected function grid(): Grid
     {
-        return Grid::make(Menu::class, function (Grid $grid) {
+        return Grid::make(Menu::query()->orderBy('rank'), function (Grid $grid) {
             $grid->column('id', '编号')->width('100px');
             $grid->column('title', '标题');
             $grid->column('path', '路由路径');
