@@ -145,8 +145,9 @@ class Column implements Renderable
         $this->custom = [
             'type' => 'column-edit',
             'element-tag' => 'input',
-            'event' => $event ? 1 : 0
+            'event' => $event ? 1 : 0,
         ];
+
         return $this;
     }
 
