@@ -158,7 +158,7 @@ class Column implements Renderable
     {
         $this->custom = [
             'type' => 'column-edit',
-            'element-tag' => 'input',
+            'element-tag' => 'switch',
             'event' => $event ? 1 : 0,
             'bind' => [],
         ];
