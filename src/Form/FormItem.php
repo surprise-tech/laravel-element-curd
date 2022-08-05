@@ -106,6 +106,18 @@ class FormItem extends ElementAttributes implements Renderable
     }
 
     /**
+     * 禁用.
+     *
+     * @return $this
+     */
+    public function disabled(bool $flag = true): static
+    {
+        $this->binds['disabled'] = $flag;
+
+        return $this;
+    }
+
+    /**
      * 设置表单验证规则.
      *
      * @param null $rules
