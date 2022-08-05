@@ -35,7 +35,7 @@ class Grid extends ElementAttributes implements Renderable
      */
     protected array $detailOptions = [
         '__type__' => 'drawer',
-        '_custom_' => false,
+        '__custom__' => false,
         'width' => '50%',
         'title' => '查看详情',
     ];
@@ -45,7 +45,7 @@ class Grid extends ElementAttributes implements Renderable
      */
     protected array $editOptions = [
         '__type__' => 'drawer',
-        '_custom_' => false,
+        '__custom__' => false,
         'width' => '50%',
         'title' => '编辑',
     ];
@@ -56,7 +56,7 @@ class Grid extends ElementAttributes implements Renderable
     protected array $createOptions = [
         '__type__' => 'drawer',
         '__cache__' => true,
-        '_custom_' => false,
+        '__custom__' => false,
         'width' => '50%',
         'title' => '新增',
     ];
@@ -317,7 +317,7 @@ class Grid extends ElementAttributes implements Renderable
      */
     public function customCreate(bool $flag = true): static
     {
-        $this->createOptions['_custom_'] = $flag;
+        $this->createOptions['__custom__'] = $flag;
 
         return $this;
     }
@@ -327,7 +327,7 @@ class Grid extends ElementAttributes implements Renderable
      */
     public function customEdit(bool $flag = true): static
     {
-        $this->editOptions['_custom_'] = $flag;
+        $this->editOptions['__custom__'] = $flag;
 
         return $this;
     }
@@ -337,7 +337,7 @@ class Grid extends ElementAttributes implements Renderable
      */
     public function customShow(bool $flag = true): static
     {
-        $this->detailOptions['_custom_'] = $flag;
+        $this->detailOptions['__custom__'] = $flag;
 
         return $this;
     }
