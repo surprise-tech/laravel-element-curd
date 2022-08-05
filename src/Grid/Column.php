@@ -127,11 +127,12 @@ class Column implements Renderable
     /**
      * 多项label.
      */
-    public function multipleLabel(string $color = 'success'): static
+    public function multipleLabel(string $color = 'success', string $effect = 'light'): static
     {
         $this->custom = [
             'type' => 'multiple-tag',
             'color' => $color,
+            'effect' => $effect,
         ];
 
         return $this;

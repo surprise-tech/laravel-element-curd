@@ -22,6 +22,16 @@ class Field implements Renderable
     protected string $label;
 
     /**
+     * 类型.
+     */
+    protected string $type = 'text';
+
+    /**
+     * 附加属性.
+     */
+    protected array $options = [];
+
+    /**
      * 自定义显示函数.
      */
     protected \Closure $asCallback;
@@ -34,6 +44,58 @@ class Field implements Renderable
         $this->content = $content;
         $this->label = $label;
         $this->asCallback = fn ($val) => ($val instanceof Carbon) ? $val->format('Y-m-d H:i:s') : $val;
+    }
+
+    /**
+     * label类型.
+     */
+    public function label(array $options): static
+    {
+        $this->type = 'tag';
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * multiple label类型.
+     */
+    public function multipleLabel(string $color = 'success', string $effect = 'light'): static
+    {
+        $this->type = 'multiple-tag';
+        $this->options = [
+            'color' => $color,
+            'effect' => $effect,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * 图片类型.
+     */
+    public function image(string $width = '44px', string $height = '44px'): static
+    {
+        $this->type = 'image';
+        $this->options = [
+            'style' => [
+                'width' => $width,
+                'heigth' => $height,
+            ],
+        ];
+
+        return $this;
+    }
+
+    /**
+     * 自定义组件.
+     */
+    public function custom(string $component, mixed $options = []): static
+    {
+        $this->type = $component;
+        $this->options = $options;
+
+        return $this;
     }
 
     /**
@@ -55,6 +117,7 @@ class Field implements Renderable
             'bind' => [
                 'label' => $this->label,
             ],
+            'type' => $this->type,
             'data' => is_callable($this->asCallback) ? call_user_func($this->asCallback, $this->content) : $this->content,
         ];
     }
