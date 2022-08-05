@@ -24,6 +24,13 @@ class Select extends FormItem
         'select-options' => [],
     ];
 
+    public function disabled(bool $flag = true): static
+    {
+        $this->binds['options']['disabled'] = $flag;
+
+        return $this;
+    }
+
     /**
      * 设置选项.
      */
