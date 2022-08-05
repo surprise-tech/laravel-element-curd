@@ -42,7 +42,7 @@ trait ModelTree
 
         return array_merge($rootText ? [[
             'label' => $rootText,
-            'value' => '0',
+            'value' => 0,
         ]] : [], Help::getTreeData($data, 0, $model->parentColumn, $valueColumn, function ($item) use ($titleColumn, $valueColumn) {
             return [
                 'label' => data_get($item, $titleColumn),
