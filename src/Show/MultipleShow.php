@@ -23,6 +23,7 @@ class MultipleShow implements Renderable
     public function addDescription(Show $show): static
     {
         $this->descriptions[] = [
+            'custom' => false,
             'type' => 'descriptions',
             'data' => $show->render(),
         ];
@@ -36,11 +37,24 @@ class MultipleShow implements Renderable
     public function addTable(Table $table): static
     {
         $this->descriptions[] = [
+            'custom' => false,
             'type' => 'table',
             'data' => $table->render(),
         ];
 
         return $this;
+    }
+
+    /**
+     * 追加自定义组件.
+     */
+    public function addCustom(string $component, array $data = [])
+    {
+        $this->descriptions[] = [
+            'custom' => true,
+            'type' => $component,
+            'data' => $data,
+        ];
     }
 
     /**
