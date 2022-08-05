@@ -355,17 +355,21 @@ class Grid extends ElementAttributes implements Renderable
     /**
      * 设置弹框大小.
      */
-    public function setSize(string $editWidth, string|null $createWidth = null): static
+    public function setSize(string $editWidth, string|null $createWidth = null, string|null $detailWidth = null): static
     {
-        return $this->editSize($editWidth)->createSize($createWidth ?: $editWidth);
+        return $this->editSize($editWidth)
+            ->createSize($createWidth ?: $editWidth)
+            ->detailSize($detailWidth ?: $editWidth);
     }
 
     /**
      * 开启弹框.
      */
-    public function openDialog(bool $editFlag = true, bool $createFlag = true): Grid
+    public function openDialog(bool $editFlag = true, bool $createFlag = true, bool $detailFlag = true): Grid
     {
-        return $this->openEditDialog($editFlag)->openCreateDialog($createFlag);
+        return $this->openEditDialog($editFlag)
+            ->openCreateDialog($createFlag)
+            ->openDetailDialog($detailFlag);
     }
 
     /**
