@@ -32,7 +32,7 @@ class Select extends FormItem
         $opts = [];
         foreach ($options as $key => $val) {
             $temp = [
-                'value' => $key,
+                'value' => (string) $key,
                 'label' => $val,
             ];
             if ($callback) {
