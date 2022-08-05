@@ -118,6 +118,7 @@ class Field implements Renderable
                 'label' => $this->label,
             ],
             'type' => $this->type,
+            'options' => $this->options,
             'data' => is_callable($this->asCallback) ? call_user_func($this->asCallback, $this->content) : $this->content,
         ];
     }
