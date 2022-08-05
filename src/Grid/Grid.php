@@ -35,6 +35,7 @@ class Grid extends ElementAttributes implements Renderable
      */
     protected array $detailOptions = [
         '__type__' => 'drawer',
+        '_custom_' => false,
         'width' => '50%',
         'title' => '查看详情',
     ];
@@ -44,6 +45,7 @@ class Grid extends ElementAttributes implements Renderable
      */
     protected array $editOptions = [
         '__type__' => 'drawer',
+        '_custom_' => false,
         'width' => '50%',
         'title' => '编辑',
     ];
@@ -54,6 +56,7 @@ class Grid extends ElementAttributes implements Renderable
     protected array $createOptions = [
         '__type__' => 'drawer',
         '__cache__' => true,
+        '_custom_' => false,
         'width' => '50%',
         'title' => '新增',
     ];
@@ -310,13 +313,59 @@ class Grid extends ElementAttributes implements Renderable
     }
 
     /**
+     * 创建表单自定义.
+     */
+    public function customCreate(bool $flag = true): static
+    {
+        $this->createOptions['_custom_'] = $flag;
+
+        return $this;
+    }
+
+    /**
+     * 编辑表单自定义.
+     */
+    public function customEdit(bool $flag = true): static
+    {
+        $this->editOptions['_custom_'] = $flag;
+
+        return $this;
+    }
+
+    /**
+     * 详情自定义.
+     */
+    public function customShow(bool $flag = true): static
+    {
+        $this->detailOptions['_custom_'] = $flag;
+
+        return $this;
+    }
+
+    /**
      * 设置actions的宽度.
      */
-    public function actionWidth(string $width = '150px')
+    public function actionWidth(string $width = '150px'): static
     {
         $this->tableOptions['actionWidth'] = $width;
 
         return $this;
+    }
+
+    /**
+     * 设置弹框大小.
+     */
+    public function setSize(string $editWidth, string|null $createWidth = null): static
+    {
+        return $this->editSize($editWidth)->createSize($createWidth ?: $editWidth);
+    }
+
+    /**
+     * 开启弹框.
+     */
+    public function openDialog(bool $editFlag = true, bool $createFlag = true): Grid
+    {
+        return $this->openEditDialog($editFlag)->openCreateDialog($createFlag);
     }
 
     /**
@@ -328,7 +377,7 @@ class Grid extends ElementAttributes implements Renderable
         $request = request();
 
         if ($this->tableOptions['showPagination']) { // 存在分页
-            $per_page = min($request->input('per_page'), 50);
+            $per_page = min($request->input('per_page'), 100);
             $current_page = $request->input('current_page', 1);
             $total = $this->model()->count();
             $resource = $this->search($this->filter->searchRule)->skip(($current_page - 1) * $per_page)->take($per_page)->get();
