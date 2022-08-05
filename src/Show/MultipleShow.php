@@ -48,13 +48,15 @@ class MultipleShow implements Renderable
     /**
      * 追加自定义组件.
      */
-    public function addCustom(string $component, array $data = [])
+    public function addCustom(string $component, array $data = []): static
     {
         $this->descriptions[] = [
             'custom' => true,
             'type' => $component,
             'data' => $data,
         ];
+
+        return $this;
     }
 
     /**
