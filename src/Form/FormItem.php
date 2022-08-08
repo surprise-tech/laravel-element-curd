@@ -32,6 +32,11 @@ class FormItem extends ElementAttributes implements Renderable
     protected string $column = '';
 
     /**
+     * help 文字.
+     */
+    protected string|null $helpText = null;
+
+    /**
      * placeholder.
      */
     protected string|null $placeholder = '';
@@ -101,6 +106,16 @@ class FormItem extends ElementAttributes implements Renderable
     public function default($value): static
     {
         $this->defaultVal = $value;
+
+        return $this;
+    }
+
+    /**
+     * 设置帮助文字.
+     */
+    public function help(string|null $help = null): static
+    {
+        $this->helpText = $help;
 
         return $this;
     }
@@ -198,6 +213,7 @@ class FormItem extends ElementAttributes implements Renderable
 
         return array_merge([
             'type' => $this->type,
+            'helpText' => $this->helpText,
             'name' => str_replace('.', '_', $this->column),
             'label' => $this->label,
             'bind' => $this->binds,
